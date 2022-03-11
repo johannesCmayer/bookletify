@@ -2,6 +2,9 @@ import argparse
 import os
 import pdb
 from subprocess import check_output
+from shutil import which
+
+assert which("pdftk") is not None, "Script needs 'pdftk' program in path."
 
 def is_pdf(string):
     if os.path.isfile(string) and os.path.splitext(string)[-1] == ".pdf":
