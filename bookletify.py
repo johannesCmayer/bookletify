@@ -42,5 +42,4 @@ for i,e in enumerate(l):
     if i < len(l) - 1:
         num_str += " "
 
-pdb.set_trace()
 os.system(f"pdftk C2.pdf cat {num_str} output {args.output_path}")
