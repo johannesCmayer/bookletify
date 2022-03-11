@@ -4,7 +4,11 @@ import pdb
 from subprocess import check_output
 from shutil import which
 
-assert which("pdftk") is not None, "Script needs 'pdftk' program in path."
+# TODO
+# - Make it so that also page numbers that are not a multiple of 4 are possible, such that the first page will always be the first page of the booklet, and all empty pages are at the end of the booklet.
+
+for p in ["pdftk", "pdfnup"]:
+    assert which(p) is not None, f"Script needs '{p}' executables in path."
 
 def is_pdf(string):
     if os.path.isfile(string) and os.path.splitext(string)[-1] == ".pdf":
@@ -29,7 +33,7 @@ swap = True
 assert num_pages % 4 == 0, "Only can handle pdf with page count divisible by 4"
 assert num_pages % 2 == 0
 
-for i in range(1, int(num_pages/2)):
+for i in range(1, int(num_pages/2) + 1):
     if swap:
         l.append(num_pages + 1 - i)
         l.append(i)
@@ -45,4 +49,8 @@ for i,e in enumerate(l):
     if i < len(l) - 1:
         num_str += " "
 
-os.system(f"pdftk C2.pdf cat {num_str} output {args.output_path}")
+temp_file = f"temp_{args.output_path}"
+
+os.system(f"pdftk C2.pdf cat {num_str} output {temp_file}")
+os.system(f"pdfnup --nup 2x1 --outfile {args.output_path} {temp_file}")
+os.remove(temp_file)
