@@ -4,6 +4,8 @@ import pdb
 from subprocess import check_output
 from shutil import which, copy
 
+# TODO add functionality for cutting out of large book
+
 SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
 TITLE_PAGE_TEX_PATH = f"{SCRIPT_PATH}/templates/title.tex"
 BLANK_PAGE_TEX_PATH = f"{SCRIPT_PATH}/templates/blank.tex"
